@@ -3,26 +3,26 @@
 #include <string>
 #include <limits>
 
-// Типы комнат
+// РўРёРїС‹ РєРѕРјРЅР°С‚
 enum class RoomType { Bedroom, Kitchen, Bathroom, Children, Living };
 
-// Комната
+// РљРѕРјРЅР°С‚Р°
 struct Room {
     RoomType type;
     double area;
     double ceilingHeight;
 };
 
-// Этаж
+// Р­С‚Р°Р¶
 struct Floor {
     int number;
     std::vector<Room> rooms;
 };
 
-// Типы построек
+// РўРёРїС‹ РїРѕСЃС‚СЂРѕРµРє
 enum class BuildingType { House, Garage, Shed, Bathhouse };
 
-// Постройка
+// РџРѕСЃС‚СЂРѕР№РєР°
 struct Building {
     BuildingType type;
     double area;
@@ -30,19 +30,19 @@ struct Building {
     std::vector<Floor> floors;
 };
 
-// Участок
+// РЈС‡Р°СЃС‚РѕРє
 struct Plot {
     int number;
     double totalArea;
     std::vector<Building> buildings;
 };
 
-// Поселок
+// РџРѕСЃРµР»РѕРє
 struct Village {
     std::vector<Plot> plots;
 };
 
-// Функция для безопасного ввода числовых значений
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р±РµР·РѕРїР°СЃРЅРѕРіРѕ РІРІРѕРґР° С‡РёСЃР»РѕРІС‹С… Р·РЅР°С‡РµРЅРёР№
 template<typename T>
 T getValidatedInput(T min, T max) {
     T value;
@@ -51,7 +51,7 @@ T getValidatedInput(T min, T max) {
         if (std::cin.fail() || value < min || value > max) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Некорректный ввод! Повторите попытку: ";
+            std::cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ! РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ: ";
         }
         else {
             break;
@@ -60,27 +60,27 @@ T getValidatedInput(T min, T max) {
     return value;
 }
 
-// Функция для ввода комнаты
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІРІРѕРґР° РєРѕРјРЅР°С‚С‹
 Room createRoom() {
     Room room;
-    std::cout << "Выберите тип комнаты (0: Спальня, 1: Кухня, 2: Ванная, 3: Детская, 4: Гостиная): ";
+    std::cout << "Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї РєРѕРјРЅР°С‚С‹ (0: РЎРїР°Р»СЊРЅСЏ, 1: РљСѓС…РЅСЏ, 2: Р’Р°РЅРЅР°СЏ, 3: Р”РµС‚СЃРєР°СЏ, 4: Р“РѕСЃС‚РёРЅР°СЏ): ";
     int roomType = getValidatedInput(0, 4);
     room.type = static_cast<RoomType>(roomType);
 
-    std::cout << "Введите площадь комнаты (>= 2): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РїР»РѕС‰Р°РґСЊ РєРѕРјРЅР°С‚С‹ (>= 2): ";
     room.area = getValidatedInput(2.0, 1000.0);
 
-    std::cout << "Введите высоту потолка (2.0 - 5.0 м): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РІС‹СЃРѕС‚Сѓ РїРѕС‚РѕР»РєР° (2.0 - 5.0 Рј): ";
     room.ceilingHeight = getValidatedInput(2.0, 5.0);
 
     return room;
 }
 
-// Функция для ввода этажа
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІРІРѕРґР° СЌС‚Р°Р¶Р°
 Floor createFloor(int floorNumber) {
     Floor floor;
     floor.number = floorNumber;
-    std::cout << "Введите количество комнат на " << floorNumber << " этаже (2-4): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјРЅР°С‚ РЅР° " << floorNumber << " СЌС‚Р°Р¶Рµ (2-4): ";
     int roomsCount = getValidatedInput(2, 4);
 
     for (int j = 0; j < roomsCount; ++j) {
@@ -89,25 +89,25 @@ Floor createFloor(int floorNumber) {
     return floor;
 }
 
-// Функция для ввода здания
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІРІРѕРґР° Р·РґР°РЅРёСЏ
 Building createBuilding(BuildingType type) {
     setlocale(LC_ALL, "Russian");
     Building b;
     b.type = type;
-    std::cout << "Введите площадь постройки (>= 5): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РїР»РѕС‰Р°РґСЊ РїРѕСЃС‚СЂРѕР№РєРё (>= 5): ";
     b.area = getValidatedInput(5.0, 10000.0);
 
     if (type == BuildingType::House || type == BuildingType::Bathhouse) {
         char hasStove;
         do {
-            std::cout << "Есть печь с трубой? (y/n): ";
+            std::cout << "Р•СЃС‚СЊ РїРµС‡СЊ СЃ С‚СЂСѓР±РѕР№? (y/n): ";
             std::cin >> hasStove;
         } while (hasStove != 'y' && hasStove != 'n');
         b.hasStove = (hasStove == 'y');
     }
 
     if (type == BuildingType::House) {
-        std::cout << "Введите количество этажей (1-3): ";
+        std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌС‚Р°Р¶РµР№ (1-3): ";
         int floorsCount = getValidatedInput(1, 3);
         for (int i = 1; i <= floorsCount; ++i) {
             b.floors.push_back(createFloor(i));
@@ -116,19 +116,19 @@ Building createBuilding(BuildingType type) {
     return b;
 }
 
-// Функция для создания участка
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СѓС‡Р°СЃС‚РєР°
 Plot createPlot(int number) {
     setlocale(LC_ALL, "Russian");
     Plot p;
     p.number = number;
-    std::cout << "Введите общую площадь участка (>= 50): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РѕР±С‰СѓСЋ РїР»РѕС‰Р°РґСЊ СѓС‡Р°СЃС‚РєР° (>= 50): ";
     p.totalArea = getValidatedInput(50.0, 100000.0);
 
-    std::cout << "Введите количество построек на участке (1-10): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃС‚СЂРѕРµРє РЅР° СѓС‡Р°СЃС‚РєРµ (1-10): ";
     int buildingsCount = getValidatedInput(1, 10);
 
     for (int i = 0; i < buildingsCount; ++i) {
-        std::cout << "Выберите тип постройки (0: Дом, 1: Гараж, 2: Сарай, 3: Баня): ";
+        std::cout << "Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї РїРѕСЃС‚СЂРѕР№РєРё (0: Р”РѕРј, 1: Р“Р°СЂР°Р¶, 2: РЎР°СЂР°Р№, 3: Р‘Р°РЅСЏ): ";
         int buildingType = getValidatedInput(0, 3);
         p.buildings.push_back(createBuilding(static_cast<BuildingType>(buildingType)));
     }
@@ -138,14 +138,14 @@ Plot createPlot(int number) {
 int main() {
     setlocale(LC_ALL, "Russian");
     Village village;
-    std::cout << "Введите количество участков в поселке (1-100): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СѓС‡Р°СЃС‚РєРѕРІ РІ РїРѕСЃРµР»РєРµ (1-100): ";
     int plotCount = getValidatedInput(1, 100);
 
     for (int i = 1; i <= plotCount; ++i) {
-        std::cout << "\nЗаполнение информации для участка " << i << ":\n";
+        std::cout << "\nР—Р°РїРѕР»РЅРµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РґР»СЏ СѓС‡Р°СЃС‚РєР° " << i << ":\n";
         village.plots.push_back(createPlot(i));
     }
 
-    std::cout << "\nДанные о поселке сохранены." << std::endl;
+    std::cout << "\nР”Р°РЅРЅС‹Рµ Рѕ РїРѕСЃРµР»РєРµ СЃРѕС…СЂР°РЅРµРЅС‹." << std::endl;
     return 0;
 }
