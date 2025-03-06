@@ -15,7 +15,7 @@ void listRecords(const std::string& filename) {
     setlocale(LC_ALL, "Russian");
     std::ifstream file(filename);
     if (!file) {
-        std::cerr << "Îøèáêà îòêðûòèÿ ôàéëà!" << std::endl;
+        std::cerr << "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð°!" << std::endl;
         return;
     }
 
@@ -27,7 +27,7 @@ void listRecords(const std::string& filename) {
 
     for (const auto& r : records) {
         std::cout << r.fName << " " << r.lName << " " << r.date << " "
-            << std::fixed << std::setprecision(2) << r.amount << " ðóá." << std::endl;
+            << std::fixed << std::setprecision(2) << r.amount << " Ñ€ÑƒÐ±." << std::endl;
     }
 }
 
@@ -35,22 +35,22 @@ void addRecord(const std::string& filename) {
     setlocale(LC_ALL, "Russian");
     std::ofstream file(filename, std::ios::app);
     if (!file) {
-        std::cerr << "Îøèáêà îòêðûòèÿ ôàéëà!" << std::endl;
+        std::cerr << "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð°!" << std::endl;
         return;
     }
 
     Record rec;
-    std::cout << "Ââåäèòå èìÿ: ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ:";
     std::cin >> rec.fName;
-    std::cout << "Ââåäèòå ôàìèëèþ: ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ„Ð°Ð¼Ð¸Ð»Ð¸ÑŽ: ";
     std::cin >> rec.lName;
-    std::cout << "Ââåäèòå äàòó (ÄÄ.ÌÌ.ÃÃÃÃ): ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð°Ñ‚Ñƒ (Ð”Ð”.ÐœÐœ.Ð“Ð“Ð“Ð“): ";
     std::cin >> rec.date;
-    std::cout << "Ââåäèòå ñóììó: ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÑƒÐ¼Ð¼Ñƒ: ";
     std::cin >> rec.amount;
 
     file << rec.fName << " " << rec.lName << " " << rec.date << " " << rec.amount << std::endl;
-    std::cout << "Çàïèñü äîáàâëåíà!" << std::endl;
+    std::cout << "Ð—Ð°Ð¿Ð¸ÑÑŒ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð°!" << std::endl;
 }
 
 int main() {
@@ -59,7 +59,7 @@ int main() {
     std::string filename = "statement.txt";
 
     while (true) {
-        std::cout << "Ââåäèòå êîìàíäó (list/add/cls(äëÿ î÷èñòêè òåðìèíàëà), 0 äëÿ âûõîäà): ";
+        std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ (list/add/cls(Ð´Ð»Ñ Ð¾Ñ‡Ð¸ÑÑ‚ÐºÐ¸ Ñ‚ÐµÑ€Ð¼Ð¸Ð½Ð°Ð»Ð°), 0 Ð´Ð»Ñ Ð²Ñ‹Ñ…Ð¾Ð´Ð°): ";
         std::cin >> command;
 
         if (command == "0") break;
@@ -74,9 +74,9 @@ int main() {
             system("cls");
         }
         else {
-            std::cerr << "Íåèçâåñòíàÿ êîìàíäà! Ïîïðîáóéòå ñíîâà." << std::endl;
-            std::cin.clear(); // Ñáðîñ ôëàãîâ îøèáêè
-            std::cin.ignore(10000, '\n'); // Î÷èñòêà ëèøíåãî ââîäà
+            std::cerr << "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð°Ñ ÐºÐ¾Ð¼Ð°Ð½Ð´Ð°! ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÑÐ½Ð¾Ð²Ð°." << std::endl;
+            std::cin.clear(); // Ð¡Ð±Ñ€Ð¾Ñ Ñ„Ð»Ð°Ð³Ð¾Ð² Ð¾ÑˆÐ¸Ð±ÐºÐ¸
+            std::cin.ignore(10000, '\n'); // ÐžÑ‡Ð¸ÑÑ‚ÐºÐ° Ð»Ð¸ÑˆÐ½ÐµÐ³Ð¾ Ð²Ð²Ð¾Ð´Ð°
         }
     }
     return 0;
