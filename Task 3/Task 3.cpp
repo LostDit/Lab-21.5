@@ -29,7 +29,7 @@ double length(const Vector& v) {
 Vector normalize(const Vector& v) {
     double len = length(v);
     if (len == 0) {
-        std::cerr << "Нулевой вектор нормализовать не получится";
+        std::cerr << "РќСѓР»РµРІРѕР№ РІРµРєС‚РѕСЂ РЅРѕСЂРјР°Р»РёР·РѕРІР°С‚СЊ РЅРµ РїРѕР»СѓС‡РёС‚СЃСЏ";
         return Vector(0, 0);
     }
     return Vector(v.x / len, v.y / len);
@@ -46,7 +46,7 @@ T safeInput(const std::string& prompt) {
             return value;
         }
         else {
-            std::cout << "Неверный ввод, попробуйте еще раз." << std::endl;
+            std::cout << "РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·." << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -55,8 +55,8 @@ T safeInput(const std::string& prompt) {
 
 
 Vector inputVector(const std::string& prompt) {
-    double x = safeInput<double>(prompt + " (координата x): ");
-    double y = safeInput<double>(prompt + " (координата y): ");
+    double x = safeInput<double>(prompt + " (РєРѕРѕСЂРґРёРЅР°С‚Р° x): ");
+    double y = safeInput<double>(prompt + " (РєРѕРѕСЂРґРёРЅР°С‚Р° y): ");
     return Vector(x, y);
 }
 
@@ -67,61 +67,61 @@ int main() {
     Vector v1, v2;
     double scalar;
 
-    std::cout << "Сложение двух векторов - команда 'add'" << "\nВычитание двух векторов - команда 'subtract'"
-        << "\nУмножение вектора на скаляр - команда 'scale'" << "\nНахождение длины вектора - команда 'length'"
-        << "\nНормализация вектора - команда 'normalize'";
-    std::cout << "\nДля выхода напишите 'exit'" << std::endl;
+    std::cout << "РЎР»РѕР¶РµРЅРёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ - РєРѕРјР°РЅРґР° 'add'" << "\nР’С‹С‡РёС‚Р°РЅРёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ - РєРѕРјР°РЅРґР° 'subtract'"
+        << "\nРЈРјРЅРѕР¶РµРЅРёРµ РІРµРєС‚РѕСЂР° РЅР° СЃРєР°Р»СЏСЂ - РєРѕРјР°РЅРґР° 'scale'" << "\nРќР°С…РѕР¶РґРµРЅРёРµ РґР»РёРЅС‹ РІРµРєС‚РѕСЂР° - РєРѕРјР°РЅРґР° 'length'"
+        << "\nРќРѕСЂРјР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР° - РєРѕРјР°РЅРґР° 'normalize'";
+    std::cout << "\nР”Р»СЏ РІС‹С…РѕРґР° РЅР°РїРёС€РёС‚Рµ 'exit'" << std::endl;
 
     while (true) {
-        std::cout << "\nВведите операцию над векторами: ";
+        std::cout << "\nР’РІРµРґРёС‚Рµ РѕРїРµСЂР°С†РёСЋ РЅР°Рґ РІРµРєС‚РѕСЂР°РјРё: ";
         std::getline(std::cin, operation);
 
         if (operation == "add") {
 
-            v1 = inputVector("Введите вектор 1");
-            v2 = inputVector("Введите вектор 2");
+            v1 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ 1");
+            v2 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ 2");
 
             Vector result = add(v1, v2);
             std::cout << "\nResult: (" << result.x << ", " << result.y << ")" << std::endl;
 
         }else if (operation == "subtract") {
 
-            v1 = inputVector("Введите вектор 1");
-            v2 = inputVector("Введите вектор 2");
+            v1 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ 1");
+            v2 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ 2");
 
             Vector result = subtract(v1, v2);
             std::cout << "\nResult: (" << result.x << ", " << result.y << ")" << std::endl;
 
         }else if (operation == "scale") {
-            v1 = inputVector("Введите вектор");
+            v1 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ");
 
-            scalar = safeInput<double>("\nВведите скаляр: ");
+            scalar = safeInput<double>("\nР’РІРµРґРёС‚Рµ СЃРєР°Р»СЏСЂ: ");
             Vector result = scale(v1, scalar);
             std::cout << "\nResult: (" << result.x << ", " << result.y << ")" << std::endl;
 
         }else if (operation == "length") {
 
-            v1 = inputVector("Введите вектор");
+            v1 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ");
             double result = length(v1);
-            std::cout << "\nДлина: " << result << std::endl;
+            std::cout << "\nР”Р»РёРЅР°: " << result << std::endl;
 
         }else if (operation == "normalize") {
 
-            v1 = inputVector("Введите вектор");
+            v1 = inputVector("Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ");
             Vector result = normalize(v1);
-            std::cout << "\nНормализованный вектор: (" << result.x << ", " << result.y << ")" << std::endl;
+            std::cout << "\nРќРѕСЂРјР°Р»РёР·РѕРІР°РЅРЅС‹Р№ РІРµРєС‚РѕСЂ: (" << result.x << ", " << result.y << ")" << std::endl;
 
         }else if (operation == "exit") {
             
-            std::cout << "\nВы вышли из программы." << std::endl;
+            std::cout << "\nР’С‹ РІС‹С€Р»Рё РёР· РїСЂРѕРіСЂР°РјРјС‹." << std::endl;
             break;
 
         }else {
             system("cls");
-            std::cout << "Неверная команда!" << std::endl;
-            std::cout << "\nСложение двух векторов - команда 'add'" << "\nВычитание двух векторов - команда 'subtract'"
-                << "\nУмножение вектора на скаляр - команда 'scale'" << "\nНахождение длины вектора - команда 'length'"
-                << "\nНормализация вектора - команда 'normalize'" << "\nДля выхода напишите 'exit'" << std::endl;
+            std::cout << "РќРµРІРµСЂРЅР°СЏ РєРѕРјР°РЅРґР°!" << std::endl;
+            std::cout << "\nРЎР»РѕР¶РµРЅРёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ - РєРѕРјР°РЅРґР° 'add'" << "\nР’С‹С‡РёС‚Р°РЅРёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ - РєРѕРјР°РЅРґР° 'subtract'"
+                << "\nРЈРјРЅРѕР¶РµРЅРёРµ РІРµРєС‚РѕСЂР° РЅР° СЃРєР°Р»СЏСЂ - РєРѕРјР°РЅРґР° 'scale'" << "\nРќР°С…РѕР¶РґРµРЅРёРµ РґР»РёРЅС‹ РІРµРєС‚РѕСЂР° - РєРѕРјР°РЅРґР° 'length'"
+                << "\nРќРѕСЂРјР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР° - РєРѕРјР°РЅРґР° 'normalize'" << "\nР”Р»СЏ РІС‹С…РѕРґР° РЅР°РїРёС€РёС‚Рµ 'exit'" << std::endl;
         }
     }
     return 0;
