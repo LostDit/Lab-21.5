@@ -46,6 +46,7 @@ T safeInput(const std::string& prompt) {
             return value;
         }
         else {
+            system("cls");
             std::cout << "Неверный ввод, попробуйте еще раз." << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
