@@ -14,13 +14,13 @@ const char PLAYER_MARK = 'P';
 const char ENEMY_MARK = 'E';
 const char EMPTY_MARK = '.';
 
-//Структура позиции передвижения
+//РЎС‚СЂСѓРєС‚СѓСЂР° РїРѕР·РёС†РёРё РїРµСЂРµРґРІРёР¶РµРЅРёСЏ
 struct Position {
     int x;
     int y;
 };
 
-//Обозначил структуру по статам
+//РћР±РѕР·РЅР°С‡РёР» СЃС‚СЂСѓРєС‚СѓСЂСѓ РїРѕ СЃС‚Р°С‚Р°Рј
 struct Character {
     string name;
     int health;
@@ -30,17 +30,17 @@ struct Character {
     bool isPlayer;
 };
 
-// Функция для генерации случайного числа в диапазоне [min, max]
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РіРµРЅРµСЂР°С†РёРё СЃР»СѓС‡Р°Р№РЅРѕРіРѕ С‡РёСЃР»Р° РІ РґРёР°РїР°Р·РѕРЅРµ [min, max]
 int randomInt(int min, int max) {
     return rand() % (max - min + 1) + min;
 }
 
-// Проверка, что позиция внутри карты
+// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РїРѕР·РёС†РёСЏ РІРЅСѓС‚СЂРё РєР°СЂС‚С‹
 bool isInside(const Position& p) {
     return p.x >= 0 && p.x < MAP_SIZE && p.y >= 0 && p.y < MAP_SIZE;
 }
 
-// Функция отображения карты и персонажей
+// Р¤СѓРЅРєС†РёСЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєР°СЂС‚С‹ Рё РїРµСЂСЃРѕРЅР°Р¶РµР№
 void drawMap(const vector<Character>& characters) {
     
     char map[MAP_SIZE][MAP_SIZE];
@@ -59,7 +59,7 @@ void drawMap(const vector<Character>& characters) {
             map[c.pos.y][c.pos.x] = ENEMY_MARK;
     }
 
-    // Вывод карты
+    // Р’С‹РІРѕРґ РєР°СЂС‚С‹
     for (int i = 0; i < MAP_SIZE; ++i) {
         for (int j = 0; j < MAP_SIZE; ++j) {
             cout << map[i][j] << " ";
@@ -69,7 +69,7 @@ void drawMap(const vector<Character>& characters) {
     cout << endl;
 }
 
-// Функция атаки: цель получает урон, который вычитается сначала из брони, затем из здоровья.
+// Р¤СѓРЅРєС†РёСЏ Р°С‚Р°РєРё: С†РµР»СЊ РїРѕР»СѓС‡Р°РµС‚ СѓСЂРѕРЅ, РєРѕС‚РѕСЂС‹Р№ РІС‹С‡РёС‚Р°РµС‚СЃСЏ СЃРЅР°С‡Р°Р»Р° РёР· Р±СЂРѕРЅРё, Р·Р°С‚РµРј РёР· Р·РґРѕСЂРѕРІСЊСЏ.
 void attack(Character& attacker, Character& target) {
     setlocale(LC_ALL, "Russian");
     
@@ -84,19 +84,19 @@ void attack(Character& attacker, Character& target) {
         target.armor = 0;
         target.health -= remaining;
     }
-    cout << attacker.name << " атакует " << target.name << " и наносит "
-        << dmg << " урона.\n";
+    cout << attacker.name << " Р°С‚Р°РєСѓРµС‚ " << target.name << " Рё РЅР°РЅРѕСЃРёС‚ "
+        << dmg << " СѓСЂРѕРЅР°.\n";
     if (target.health <= 0)
-        cout << target.name << " уничтожен!\n";
+        cout << target.name << " СѓРЅРёС‡С‚РѕР¶РµРЅ!\n";
 }
 
-// Функция сохранения состояния игры
+// Р¤СѓРЅРєС†РёСЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
 void saveGame(const vector<Character>& characters) {
     setlocale(LC_ALL, "Russian");
     
     ofstream file("save.bin", ios::binary);
     if (!file) {
-        cout << "Ошибка при открытии файла для сохранения.\n";
+        cout << "РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё С„Р°Р№Р»Р° РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ.\n";
         return;
     }
     size_t count = characters.size();
@@ -112,16 +112,16 @@ void saveGame(const vector<Character>& characters) {
         file.write((char*)&c.pos, sizeof(c.pos));
     }
     file.close();
-    cout << "Игра сохранена.\n";
+    cout << "РРіСЂР° СЃРѕС…СЂР°РЅРµРЅР°.\n";
 }
 
-// Функция загрузки состояния игры
+// Р¤СѓРЅРєС†РёСЏ Р·Р°РіСЂСѓР·РєРё СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
 bool loadGame(vector<Character>& characters) {
     setlocale(LC_ALL, "Russian");
 
     ifstream file("save.bin", ios::binary);
     if (!file) {
-        cout << "Файл сохранения не найден.\n";
+        cout << "Р¤Р°Р№Р» СЃРѕС…СЂР°РЅРµРЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ.\n";
         return false;
     }
     characters.clear();
@@ -144,12 +144,12 @@ bool loadGame(vector<Character>& characters) {
         characters.push_back(c);
     }
     file.close();
-    cout << "Игра загружена.\n";
+    cout << "РРіСЂР° Р·Р°РіСЂСѓР¶РµРЅР°.\n";
     return true;
 }
 
-// Функция перемещения персонажа с проверкой границ.
-// Используем команды: W (вверх), A (влево), S (вниз), D (вправо).
+// Р¤СѓРЅРєС†РёСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р° СЃ РїСЂРѕРІРµСЂРєРѕР№ РіСЂР°РЅРёС†.
+// РСЃРїРѕР»СЊР·СѓРµРј РєРѕРјР°РЅРґС‹: W (РІРІРµСЂС…), A (РІР»РµРІРѕ), S (РІРЅРёР·), D (РІРїСЂР°РІРѕ).
 Position movePosition(const Position& current, char direction) {
     Position next = current;
     switch (direction) {
@@ -165,7 +165,7 @@ Position movePosition(const Position& current, char direction) {
         return current;
 }
 
-// Проверка, занята ли клетка другим живым персонажем; возвращает индекс или -1.
+// РџСЂРѕРІРµСЂРєР°, Р·Р°РЅСЏС‚Р° Р»Рё РєР»РµС‚РєР° РґСЂСѓРіРёРј Р¶РёРІС‹Рј РїРµСЂСЃРѕРЅР°Р¶РµРј; РІРѕР·РІСЂР°С‰Р°РµС‚ РёРЅРґРµРєСЃ РёР»Рё -1.
 int getCharacterAt(const vector<Character>& characters, const Position& pos) {
     for (size_t i = 0; i < characters.size(); i++) {
         if (characters[i].health > 0 &&
@@ -176,7 +176,7 @@ int getCharacterAt(const vector<Character>& characters, const Position& pos) {
     return -1;
 }
 
-// Функция для безопасного ввода целого числа с проверкой. (добавил на всякий)
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р±РµР·РѕРїР°СЃРЅРѕРіРѕ РІРІРѕРґР° С†РµР»РѕРіРѕ С‡РёСЃР»Р° СЃ РїСЂРѕРІРµСЂРєРѕР№. (РґРѕР±Р°РІРёР» РЅР° РІСЃСЏРєРёР№)
 void inputInt(const string& prompt, int& value) {
     setlocale(LC_ALL, "Russian");
 
@@ -184,7 +184,7 @@ void inputInt(const string& prompt, int& value) {
         cout << prompt;
         cin >> value;
         if (cin.fail()) {
-            cout << "Некорректный ввод. Введите число.\n";
+            cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ. Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ.\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -201,7 +201,7 @@ int main() {
     srand(static_cast<unsigned int>(time(0)));
     vector<Character> characters;
 
-    // Создаем противников
+    // РЎРѕР·РґР°РµРј РїСЂРѕС‚РёРІРЅРёРєРѕРІ
     for (int i = 0; i < NUM_ENEMIES; i++) {
         Character enemy;
         enemy.name = "Enemy #" + to_string(i + 1);
@@ -218,15 +218,15 @@ int main() {
         characters.push_back(enemy);
     }
 
-    // Создаем игрока
+    // РЎРѕР·РґР°РµРј РёРіСЂРѕРєР°
     Character player;
     player.isPlayer = true;
-    cout << "Введите имя игрока: ";
+    cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РёРіСЂРѕРєР°: ";
     getline(cin, player.name);
 
-    inputInt("Введите здоровье игрока: ", player.health);
-    inputInt("Введите броню игрока: ", player.armor);
-    inputInt("Введите урон игрока: ", player.damage);
+    inputInt("Р’РІРµРґРёС‚Рµ Р·РґРѕСЂРѕРІСЊРµ РёРіСЂРѕРєР°: ", player.health);
+    inputInt("Р’РІРµРґРёС‚Рµ Р±СЂРѕРЅСЋ РёРіСЂРѕРєР°: ", player.armor);
+    inputInt("Р’РІРµРґРёС‚Рµ СѓСЂРѕРЅ РёРіСЂРѕРєР°: ", player.damage);
 
     while (true) {
         player.pos.x = randomInt(0, MAP_SIZE - 1);
@@ -239,11 +239,11 @@ int main() {
     bool gameOver = false;
     while (!gameOver) {
         drawMap(characters);
-        cout << "\nСтатус игрока: " << player.name
-            << " Здоровье: " << player.health
-            << " Броня: " << player.armor
-            << " Урон: " << player.damage << "\n";
-        cout << "Введите команду (W - вверх, A - влево, S - вниз, D - вправо, save, load): ";
+        cout << "\nРЎС‚Р°С‚СѓСЃ РёРіСЂРѕРєР°: " << player.name
+            << " Р—РґРѕСЂРѕРІСЊРµ: " << player.health
+            << " Р‘СЂРѕРЅСЏ: " << player.armor
+            << " РЈСЂРѕРЅ: " << player.damage << "\n";
+        cout << "Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ (W - РІРІРµСЂС…, A - РІР»РµРІРѕ, S - РІРЅРёР·, D - РІРїСЂР°РІРѕ, save, load): ";
         string command;
         getline(cin, command);
 
@@ -253,7 +253,7 @@ int main() {
         }
         else if (command == "load") {
             if (loadGame(characters)) {
-                // После загрузки обновляем параметры игрока
+                // РџРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё РѕР±РЅРѕРІР»СЏРµРј РїР°СЂР°РјРµС‚СЂС‹ РёРіСЂРѕРєР°
                 for (auto& c : characters) {
                     if (c.isPlayer) {
                         player = c;
@@ -266,11 +266,11 @@ int main() {
 
         char move = toupper(command[0]);
         if (move != 'W' && move != 'A' && move != 'S' && move != 'D') {
-            cout << "Неверная команда!\n";
+            cout << "РќРµРІРµСЂРЅР°СЏ РєРѕРјР°РЅРґР°!\n";
             continue;
         }
 
-        // Находим индекс игрока
+        // РќР°С…РѕРґРёРј РёРЅРґРµРєСЃ РёРіСЂРѕРєР°
         int playerIndex = -1;
         for (size_t i = 0; i < characters.size(); i++) {
             if (characters[i].isPlayer) {
@@ -279,19 +279,19 @@ int main() {
             }
         }
         if (playerIndex == -1) {
-            cout << "Ошибка: игрок не найден!\n";
+            cout << "РћС€РёР±РєР°: РёРіСЂРѕРє РЅРµ РЅР°Р№РґРµРЅ!\n";
             break;
         }
 
-        // Передвижение игрока
+        // РџРµСЂРµРґРІРёР¶РµРЅРёРµ РёРіСЂРѕРєР°
         Position newPos = movePosition(characters[playerIndex].pos, move);
         if (newPos.x == characters[playerIndex].pos.x && newPos.y == characters[playerIndex].pos.y) {
-            cout << "Ход невозможен (выход за границы)!\n";
+            cout << "РҐРѕРґ РЅРµРІРѕР·РјРѕР¶РµРЅ (РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹)!\n";
         }
         else {
             int otherIndex = getCharacterAt(characters, newPos);
             if (otherIndex != -1) {
-                // Если цель - враг, атакуем его
+                // Р•СЃР»Рё С†РµР»СЊ - РІСЂР°Рі, Р°С‚Р°РєСѓРµРј РµРіРѕ
                 if (!characters[otherIndex].isPlayer) {
                     attack(characters[playerIndex], characters[otherIndex]);
                     if (characters[otherIndex].health <= 0) {
@@ -304,15 +304,15 @@ int main() {
             }
         }
 
-        // Обновляем игрока после хода
+        // РћР±РЅРѕРІР»СЏРµРј РёРіСЂРѕРєР° РїРѕСЃР»Рµ С…РѕРґР°
         player = characters[playerIndex];
         if (player.health <= 0) {
-            cout << "Ваш персонаж погиб. Игра окончена. Поражение!\n";
+            cout << "Р’Р°С€ РїРµСЂСЃРѕРЅР°Р¶ РїРѕРіРёР±. РРіСЂР° РѕРєРѕРЅС‡РµРЅР°. РџРѕСЂР°Р¶РµРЅРёРµ!\n";
             gameOver = true;
             break;
         }
 
-        // Передвижение противников
+        // РџРµСЂРµРґРІРёР¶РµРЅРёРµ РїСЂРѕС‚РёРІРЅРёРєРѕРІ
         for (size_t i = 0; i < characters.size(); i++) {
             if (characters[i].isPlayer || characters[i].health <= 0)
                 continue;
@@ -325,28 +325,28 @@ int main() {
             case 3: enemyMove = 'S'; break;
             }
             Position enemyNewPos = movePosition(characters[i].pos, enemyMove);
-            // Если новое положение совпадает с исходным, ход не выполняется.
+            // Р•СЃР»Рё РЅРѕРІРѕРµ РїРѕР»РѕР¶РµРЅРёРµ СЃРѕРІРїР°РґР°РµС‚ СЃ РёСЃС…РѕРґРЅС‹Рј, С…РѕРґ РЅРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ.
             if (enemyNewPos.x == characters[i].pos.x && enemyNewPos.y == characters[i].pos.y)
                 continue;
 
             int targetIndex = getCharacterAt(characters, enemyNewPos);
-            // Если новый ход ведет к столкновению с игроком, то враг атакует игрока.
+            // Р•СЃР»Рё РЅРѕРІС‹Р№ С…РѕРґ РІРµРґРµС‚ Рє СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЋ СЃ РёРіСЂРѕРєРѕРј, С‚Рѕ РІСЂР°Рі Р°С‚Р°РєСѓРµС‚ РёРіСЂРѕРєР°.
             if (targetIndex != -1 && characters[targetIndex].isPlayer) {
                 attack(characters[i], characters[targetIndex]);
-                // Если игрок погиб, завершаем игру.
+                // Р•СЃР»Рё РёРіСЂРѕРє РїРѕРіРёР±, Р·Р°РІРµСЂС€Р°РµРј РёРіСЂСѓ.
                 if (characters[targetIndex].health <= 0) {
-                    cout << "Ваш персонаж погиб под атакой " << characters[i].name << ". Игра окончена.\n";
+                    cout << "Р’Р°С€ РїРµСЂСЃРѕРЅР°Р¶ РїРѕРіРёР± РїРѕРґ Р°С‚Р°РєРѕР№ " << characters[i].name << ". РРіСЂР° РѕРєРѕРЅС‡РµРЅР°.\n";
                     gameOver = true;
                     break;
                 }
-                // В данном случае враг не перемещается, если атаковал игрока.
+                // Р’ РґР°РЅРЅРѕРј СЃР»СѓС‡Р°Рµ РІСЂР°Рі РЅРµ РїРµСЂРµРјРµС‰Р°РµС‚СЃСЏ, РµСЃР»Рё Р°С‚Р°РєРѕРІР°Р» РёРіСЂРѕРєР°.
             }
-            // Если клетка занята другим врагом, враг пропускает ход.
+            // Р•СЃР»Рё РєР»РµС‚РєР° Р·Р°РЅСЏС‚Р° РґСЂСѓРіРёРј РІСЂР°РіРѕРј, РІСЂР°Рі РїСЂРѕРїСѓСЃРєР°РµС‚ С…РѕРґ.
             else if (targetIndex != -1) {
                 continue;
             }
             else {
-                // Если клетка пуста, перемещаем врага.
+                // Р•СЃР»Рё РєР»РµС‚РєР° РїСѓСЃС‚Р°, РїРµСЂРµРјРµС‰Р°РµРј РІСЂР°РіР°.
                 characters[i].pos = enemyNewPos;
             }
         }
@@ -354,7 +354,7 @@ int main() {
         if (gameOver)
             break;
 
-        // Проверяем, уничтожены ли все враги
+        // РџСЂРѕРІРµСЂСЏРµРј, СѓРЅРёС‡С‚РѕР¶РµРЅС‹ Р»Рё РІСЃРµ РІСЂР°РіРё
         bool allEnemiesDead = true;
         for (const auto& c : characters) {
             if (!c.isPlayer && c.health > 0) {
@@ -363,7 +363,7 @@ int main() {
             }
         }
         if (allEnemiesDead) {
-            cout << "Все противники уничтожены. Вы победили!\n";
+            cout << "Р’СЃРµ РїСЂРѕС‚РёРІРЅРёРєРё СѓРЅРёС‡С‚РѕР¶РµРЅС‹. Р’С‹ РїРѕР±РµРґРёР»Рё!\n";
             gameOver = true;
         }
     }
